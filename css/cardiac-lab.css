@@ -1,0 +1,107 @@
+
+/* ============ Cardiac Lab ============ */
+.lab{display:grid;gap:16px;align-items:start;grid-template-columns:292px minmax(0,1fr) minmax(0,1fr);grid-template-areas:"pk ec ec" "pk ht vt" "pk dv dv" "pk in in"}
+.ph{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.ph h2{display:flex;align-items:center;gap:10px;font-size:1rem}
+.ph h2::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.ecgp .ph h2::before,.heart .ph h2::before{animation:led 2.4s ease-in-out infinite}@keyframes led{50%{box-shadow:0 0 0 6px rgba(53,214,176,0)}}
+.row{display:flex;gap:6px;flex-wrap:wrap}.row button{padding:.26rem .8rem;font-size:.82rem}
+/* --- Rhythm Library --- */
+#picker{grid-area:pk;position:sticky;top:calc(var(--hdr) + 14px);max-height:calc(100vh - var(--hdr) - 32px);overflow:auto;padding:16px 12px 16px 8px;scroll-padding:8px}
+#picker>h2{padding:0 8px;margin-bottom:4px;display:flex;align-items:center;gap:10px}#picker>h2::before{content:"";width:3px;height:16px;border-radius:3px;background:var(--accent)}
+#picker h3{display:flex;align-items:center;gap:8px;margin:16px 8px 8px;font-size:.7rem;color:var(--text-2);letter-spacing:.07em}
+#picker h3::before{content:"";width:8px;height:8px;border-radius:2px;background:var(--cat,var(--text-3))}#picker h3::after{content:"";flex:1;height:1px;background:var(--border)}
+#picker h3:nth-of-type(1),#picker h3:nth-of-type(1)~.rb{--cat:var(--accent-2)}
+#picker h3:nth-of-type(2),#picker h3:nth-of-type(2)~.rb{--cat:var(--accent)}
+#picker h3:nth-of-type(3),#picker h3:nth-of-type(3)~.rb{--cat:var(--warning)}
+#picker h3:nth-of-type(4),#picker h3:nth-of-type(4)~.rb{--cat:var(--danger)}
+#picker h3:nth-of-type(5),#picker h3:nth-of-type(5)~.rb{--cat:var(--text-2)}
+.rb{position:relative;display:grid;grid-template-columns:1fr auto;grid-template-areas:"fa tag" "en tag";align-items:center;column-gap:8px;width:calc(100% - 8px);margin:3px 4px;text-align:right;padding:8px 14px;border:1px solid transparent;border-radius:11px;background:transparent;overflow:hidden}
+.rb::before{content:"";position:absolute;inset-block:9px;inset-inline-start:0;width:3px;border-radius:0 3px 3px 0;background:var(--cat,var(--text-3));opacity:.35;transition:opacity var(--t),inset-block var(--t)}
+.rb b{grid-area:fa;font-size:.92rem;font-weight:700;line-height:1.5;color:var(--text)}.rb span{grid-area:en;font-family:var(--mono);font-size:.7rem;color:var(--text-3);line-height:1.4;direction:ltr;text-align:right;justify-self:start}
+.rb.s-shockable::after,.rb.s-depends::after{grid-area:tag;font-size:.64rem;font-weight:700;padding:0 8px;border-radius:99px;line-height:1.7;border:1px solid}
+.rb.s-shockable::after{content:"شوک";color:var(--danger);background:var(--danger-soft);border-color:var(--danger-line)}
+.rb.s-depends::after{content:"نبض؟";color:var(--warning);background:var(--warn-soft);border-color:var(--warn-line)}
+.rb:hover{background:var(--surface-2);border-color:var(--border);transform:none}.rb:hover::before{opacity:.8}
+.rb.on{background:linear-gradient(270deg,var(--accent-soft),rgba(53,214,176,.03));border-color:var(--accent-line);box-shadow:0 10px 24px -16px rgba(53,214,176,.55)}
+.rb.on::before{opacity:1;inset-block:0;background:var(--accent)}.rb.on b{color:var(--accent)}
+/* --- ECG monitor --- */
+.ecgp{grid-area:ec;padding:18px 18px 16px}
+.hr{display:inline-flex;align-items:baseline;margin-inline-start:12px;padding:0 14px;border-radius:99px;font-family:var(--mono);font-weight:700;font-size:1.05rem;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-line);font-variant-numeric:tabular-nums}
+.cw{position:relative;border-radius:12px;overflow:hidden;background:var(--ecg-bg);border:1px solid #1d4a41;box-shadow:inset 0 0 70px rgba(53,214,176,.05),0 0 0 5px #0A1722,0 0 0 6px var(--border)}
+.cw canvas{display:block;width:100%}
+.cw::before,.cw::after{content:"";position:absolute;width:16px;height:16px;border:2px solid var(--accent);opacity:.55;pointer-events:none;z-index:2}
+.cw::before{inset-block-start:7px;inset-inline-start:7px;border-width:2px 0 0 2px;border-radius:5px 0 0 0}.cw::after{inset-block-end:7px;inset-inline-end:7px;border-width:0 2px 2px 0;border-radius:0 0 5px 0}
+[dir=rtl] .cw::before{border-width:2px 2px 0 0;border-radius:0 5px 0 0}[dir=rtl] .cw::after{border-width:0 0 2px 2px;border-radius:0 0 0 5px}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;padding:10px;border:1px solid var(--border);border-radius:12px;background:var(--field);font-size:.8rem;color:var(--text-2)}
+.ctl label{display:inline-flex;align-items:center;gap:8px;padding:2px 4px 2px 10px;border-radius:9px;background:var(--surface);border:1px solid var(--border)}
+.ctl select{border:0;background-color:transparent;padding-block:.2rem;font-family:var(--mono);font-size:.82rem}.ctl select:focus{box-shadow:none}
+.ctl input[type=range]{width:96px}.ctl label:has(input[type=checkbox]){padding:5px 12px}
+/* --- 3D heart --- */
+.heart{grid-area:ht}
+.heart .row{gap:0}.heart .row button{border-radius:0;margin-inline-start:-1px}
+.heart .row button[data-v="front"]{border-start-start-radius:var(--r-sm);border-end-start-radius:var(--r-sm);margin-inline-start:0}
+.heart .row button[data-v="top"]{border-start-end-radius:var(--r-sm);border-end-end-radius:var(--r-sm)}
+.heart .row button#flow{margin-inline-start:10px;border-radius:var(--r-sm)}
+#h3d{position:relative;height:410px;border-radius:12px;border:1px solid var(--border);overflow:hidden;background:radial-gradient(ellipse at 50% 42%,#14324A 0%,#0C2033 46%,#08131F 100%)}
+#h3d::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgba(120,183,255,.05) 1px,transparent 1px) 0 0/100% 32px,linear-gradient(90deg,rgba(120,183,255,.05) 1px,transparent 1px) 0 0/32px 100%;-webkit-mask-image:radial-gradient(ellipse at center,#000 30%,transparent 78%);mask-image:radial-gradient(ellipse at center,#000 30%,transparent 78%)}
+#h3d canvas{position:relative;display:block;cursor:grab}#h3d canvas:active{cursor:grabbing}
+#partinfo{margin-top:12px;padding:10px 14px;border-radius:10px;background:var(--info-soft);border:1px solid var(--info-line);border-inline-start:3px solid var(--accent-2);color:var(--text);font-size:.86rem}
+#modelnote{font-size:.74rem;color:var(--text-3)}
+/* --- Vital signs --- */
+.vit{grid-area:vt}.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.tile{position:relative;display:flex;flex-direction:column;justify-content:space-between;gap:4px;min-height:80px;padding:10px 12px 12px;border-radius:12px;background:var(--field);border:1px solid var(--border);overflow:hidden}
+.tile small{display:block;color:var(--text-2);font-size:.72rem;line-height:1.3;padding-inline-end:22px}
+.tile b{font-family:var(--mono);font-size:1.3rem;font-weight:700;line-height:1.2;color:var(--text);font-variant-numeric:tabular-nums}
+.tile b::after{font-size:.66rem;font-weight:400;color:var(--text-3);margin-inline-start:5px;direction:ltr;unicode-bidi:isolate;font-family:var(--mono)}
+.tile::before{content:"";position:absolute;inset-block-start:10px;inset-inline-end:10px;width:16px;height:16px;background:var(--text-3);opacity:.85;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain}
+.tile::after{content:"";position:absolute;inset:auto 0 0 0;height:2px;background:var(--border)}
+.tile.g::after{background:var(--accent)}.tile.g b,.tile.g::before{color:var(--accent)}.tile.g b{color:var(--accent)}.tile.g::before{background:var(--accent)}
+.tile.a::after{background:var(--warning)}.tile.a b{color:var(--warning)}.tile.a::before{background:var(--warning)}
+.tile.r{background:var(--danger-soft);border-color:var(--danger-line)}.tile.r::after{background:var(--danger)}.tile.r b{color:var(--danger)}.tile.r::before{background:var(--danger)}
+.tile:first-child{border-color:var(--accent-line)}.tile:first-child b{color:var(--accent)}.tile:first-child::before{background:var(--accent)}
+.tile:nth-child(1)::before{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12h4l2-5 4 10 2-5h8'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12h4l2-5 4 10 2-5h8'/%3E%3C/svg%3E")}
+.tile:nth-child(2)::before{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 17a8 8 0 1 1 16 0'/%3E%3Cpath d='M12 17l4-5'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 17a8 8 0 1 1 16 0'/%3E%3Cpath d='M12 17l4-5'/%3E%3C/svg%3E")}
+.tile:nth-child(3)::before{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l9 5-9 5-9-5z'/%3E%3Cpath d='M3 13l9 5 9-5'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l9 5-9 5-9-5z'/%3E%3Cpath d='M3 13l9 5 9-5'/%3E%3C/svg%3E")}
+.tile:nth-child(4)::before{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z'/%3E%3C/svg%3E")}
+.tile:nth-child(5)::before{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9h11a3 3 0 1 0-3-3'/%3E%3Cpath d='M3 15h15a3 3 0 1 1-3 3'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 9h11a3 3 0 1 0-3-3'/%3E%3Cpath d='M3 15h15a3 3 0 1 1-3 3'/%3E%3C/svg%3E")}
+.tile:nth-child(6)::before{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Ccircle cx='12' cy='12' r='8'/%3E%3C/svg%3E")}
+.tile:nth-child(7)::before{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3s5 5.5 5 9.5a5 5 0 0 1-10 0C7 8.5 12 3 12 3z'/%3E%3Cpath d='M9 14a3 3 0 0 0 3 3'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3s5 5.5 5 9.5a5 5 0 0 1-10 0C7 8.5 12 3 12 3z'/%3E%3Cpath d='M9 14a3 3 0 0 0 3 3'/%3E%3C/svg%3E")}
+.tile:nth-child(8)::before{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E")}
+.tile:nth-child(9)::before{-webkit-mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z'/%3E%3C/svg%3E");mask-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z'/%3E%3C/svg%3E")}
+.tile:nth-child(1) b::after{content:'bpm'}
+.tile:nth-child(2) b::after{content:'mmHg'}
+.tile:nth-child(3) b::after{content:'mmHg'}
+.tile:nth-child(5) b::after{content:'/min'}
+
+.form{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 12px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:.78rem;color:var(--text-2)}
+.form label{display:flex;flex-direction:column;gap:3px}.form input,.form select{width:100%}
+/* --- Defib / pace --- */
+.dev{grid-area:dv}.dev .ph h2::before{background:var(--accent-2);box-shadow:0 0 0 3px var(--info-soft)}
+.devgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0}.devcol{display:flex;flex-direction:column;gap:10px;min-width:0;padding:0 20px}.devcol:first-child{padding-inline-start:0}.devcol:last-child{padding-inline-end:0}.devcol+.devcol{border-inline-start:1px solid var(--border)}
+.devcol h3{margin:0;color:var(--accent-2);font-size:.78rem}.devcol label{display:block;font-size:.8rem;color:var(--text-2)}.devcol label>b{color:var(--text);font-family:var(--mono)}.devcol label>select,.devcol label>input[type=range]{display:block;width:100%;margin-top:6px}.devcol>select{width:100%}.devcol label.chk{display:flex;align-items:center;gap:8px}.devcol label.chk input{margin:0}
+.devcol .bar{margin-top:0}.devcol .row button{flex:1}
+.bar{height:6px;border-radius:99px;background:var(--field);overflow:hidden;border:1px solid var(--border)}.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent-2),var(--accent));transition:width .6s}
+.devlog{margin-top:16px;padding:10px 14px;background:var(--field);border:1px solid var(--border);border-radius:10px;font-size:.82rem;line-height:1.9;min-height:46px;color:var(--text-2)}
+/* --- Rhythm info --- */
+.info{grid-area:in;padding:22px 24px 20px}
+.info h2{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;font-size:1.5rem;margin:0 0 12px}.info h2 .en{font-size:.82rem}
+.info dl{display:grid;grid-template-columns:170px minmax(0,1fr);column-gap:22px;margin:20px 0 0;max-width:1000px}
+.info dl::before{content:"مشخصات ECG";grid-column:1/-1;font-size:.72rem;font-weight:700;letter-spacing:.08em;color:var(--accent-2);padding-bottom:6px;border-bottom:1px solid var(--info-line)}
+.info dt,.info dd{position:relative;margin:0;padding:10px 0;border-bottom:1px solid rgba(42,64,83,.65);font-size:.93rem}
+.info dt{color:var(--text-2);font-size:.84rem}.info dd{color:var(--text)}
+.info dt:nth-of-type(7),.info dt:nth-of-type(10),.info dt:nth-of-type(11),.info dd:nth-of-type(7),.info dd:nth-of-type(10),.info dd:nth-of-type(11){margin-top:42px}
+.info dt:nth-of-type(7)::before,.info dt:nth-of-type(10)::before,.info dt:nth-of-type(11)::before{position:absolute;top:-30px;inset-inline-start:0;width:max-content;font-size:.72rem;font-weight:700;letter-spacing:.08em;color:var(--accent-2)}
+.info dt:nth-of-type(7)::before{content:"ویژگی‌های بالینی"}.info dt:nth-of-type(10)::before{content:"اقدامات عملی"}.info dt:nth-of-type(11)::before{content:"فیزیولوژی و نبض"}
+.info dd:nth-of-type(10){background:var(--accent-soft);border:1px solid var(--accent-line);border-radius:10px;padding:12px 16px;border-bottom:1px solid var(--accent-line)}
+.info dt:nth-of-type(10){color:var(--accent);font-weight:700;padding-inline-start:0}
+.info .note{margin-top:20px;padding:11px 16px;border-radius:10px;background:var(--warn-soft);border:1px solid var(--warn-line);border-inline-start:3px solid var(--warning);color:#F3D6AA}
+/* --- responsive --- */
+@media(max-width:1240px){.lab{grid-template-columns:270px minmax(0,1fr);grid-template-areas:"pk ec" "pk ht" "pk vt" "pk dv" "pk in"}}
+@media(max-width:1000px){
+ .lab{grid-template-columns:1fr;grid-template-areas:"ec" "pk" "ht" "vt" "dv" "in"}
+ #picker{position:static;max-height:330px;display:grid;grid-template-columns:repeat(2,1fr);gap:0 8px;padding:14px 10px}#picker>h2,#picker h3{grid-column:1/-1}.rb{width:calc(100% - 4px)}
+ .devgrid{grid-template-columns:1fr;gap:18px}.devcol{padding:0}.devcol+.devcol{border-inline-start:0;border-top:1px solid var(--border);padding-top:16px}}
+@media(max-width:620px){
+ #h3d{height:320px}.tiles{grid-template-columns:repeat(2,1fr)}.info dl{grid-template-columns:1fr}.info dt{border:0;padding-bottom:0}.info dt:nth-of-type(7),.info dt:nth-of-type(10),.info dt:nth-of-type(11){margin-top:44px}.info dd:nth-of-type(7),.info dd:nth-of-type(10),.info dd:nth-of-type(11){margin-top:0}
+ .info h2{font-size:1.25rem}#picker{grid-template-columns:1fr;max-height:300px}.ecgp,.panel{padding:14px}.ctl label{flex:1 1 140px}.ctl input[type=range]{width:100%}}

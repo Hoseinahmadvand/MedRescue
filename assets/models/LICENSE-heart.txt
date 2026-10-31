@@ -1,0 +1,5 @@
+heart.glb is derived from BodyParts3D (FMA parts: wall of heart, aorta, pulmonary artery/veins, vena cavae, coronary arteries/veins, valves).
+BodyParts3D, Copyright (c) 2008 Life Science Integrated Database Center, licensed by CC Attribution-Share Alike 2.1 Japan
+https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en
+Modifications: converted STL->GLB, decimated, axes re-oriented, long vessels clipped, colours added. This derivative file stays under CC BY-SA.
+Obtained from the GitHub clone Kevin-Mattheus-Moerman/BodyParts3D (assets/BodyParts3D_data/stl).
